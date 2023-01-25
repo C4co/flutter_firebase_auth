@@ -47,9 +47,9 @@ var basicTheme = ThemeData(
       elevation: 0,
       textStyle: const TextStyle(
         fontWeight: FontWeight.normal,
-        fontSize: 18,
+        fontSize: 16,
       ),
-      padding: const EdgeInsets.fromLTRB(20, 14, 20, 14),
+      padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
       shape: const StadiumBorder(),
     ),
   ),
@@ -59,6 +59,6 @@ var basicTheme = ThemeData(
     border: OutlineInputBorder(
       borderRadius: BorderRadius.circular(10),
     ),
-    contentPadding: const EdgeInsets.fromLTRB(20, 14, 20, 14),
+    contentPadding: const EdgeInsets.fromLTRB(20, 8, 20, 8),
   ),
 );
