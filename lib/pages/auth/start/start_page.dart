@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_firebase/core/services/firebase_auth.dart';
 import 'package:go_router/go_router.dart';
 import 'package:fluttericon/font_awesome5_icons.dart';
-
-import '../../../core/themes/basic.theme.dart';
+import '/core/themes/basic.theme.dart';
 
 class StartPage extends StatefulWidget {
   const StartPage({super.key});
@@ -77,7 +76,7 @@ class _StartPageState extends State<StartPage> {
               child: SizedBox(
                 width: double.infinity,
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     const Icon(
                       FontAwesome5.google,
@@ -104,7 +103,7 @@ class _StartPageState extends State<StartPage> {
               child: SizedBox(
                 width: double.infinity,
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     const Icon(
                       Icons.mail,
