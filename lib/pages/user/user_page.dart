@@ -10,18 +10,15 @@ class UserPage extends StatefulWidget {
 }
 
 class _UserPageState extends State<UserPage> {
-  @override
-  void initState() {
-    debugPrint(FirebaseAuth.instance.currentUser.toString());
-
-    super.initState();
-  }
+  User? user = FirebaseAuth.instance.currentUser;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('User page'),
+        title: Text(
+          user?.displayName == null ? '${user?.email}' : '${user?.displayName}',
+        ),
         actions: [
           IconButton(
             onPressed: () async {
@@ -48,7 +45,51 @@ class _UserPageState extends State<UserPage> {
           )
         ],
       ),
-      body: const Center(),
+      body: Column(
+        children: [
+          // name
+          if (user?.displayName != null)
+            Wrap(
+              children: [
+                ListTile(
+                  title: Text('${user?.displayName}'),
+                ),
+                Divider(
+                  height: 1,
+                  color: Colors.grey.shade500,
+                ),
+              ],
+            ),
+
+          // email
+          if (user?.email != null)
+            Wrap(
+              children: [
+                ListTile(
+                  title: Text('${user?.email}'),
+                ),
+                Divider(
+                  height: 1,
+                  color: Colors.grey.shade500,
+                ),
+              ],
+            ),
+
+          // uuid
+          if (user?.uid != null)
+            Wrap(
+              children: [
+                ListTile(
+                  title: Text('${user?.uid}'),
+                ),
+                Divider(
+                  height: 1,
+                  color: Colors.grey.shade500,
+                ),
+              ],
+            ),
+        ],
+      ),
     );
   }
 }
