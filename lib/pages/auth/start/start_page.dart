@@ -30,8 +30,9 @@ class _StartPageState extends State<StartPage> {
             const Text(
               'Flutter\nFirebase',
               style: TextStyle(
-                fontSize: 60,
-                height: 0.9,
+                fontSize: 70,
+                fontWeight: FontWeight.w300,
+                height: 0.85,
                 color: Colors.white,
               ),
             ),
