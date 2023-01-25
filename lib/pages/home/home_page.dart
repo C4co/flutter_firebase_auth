@@ -18,16 +18,28 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: const Text('Flutter Starter'),
         actions: [
-          GestureDetector(
-            onTap: () {
-              context.go('/home/user');
-            },
-            child: CircleAvatar(
-              radius: 16,
-              backgroundImage: NetworkImage('${user?.photoURL}'),
+          if (user?.photoURL == null)
+            IconButton(
+              onPressed: () {
+                context.go('/home/user');
+              },
+              icon: const Icon(Icons.person),
             ),
-          ),
-          const SizedBox(width: 10)
+          if (user?.photoURL != null)
+            Row(
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    context.go('/home/user');
+                  },
+                  child: CircleAvatar(
+                    radius: 16,
+                    child: ClipOval(child: Image.network('${user?.photoURL}')),
+                  ),
+                ),
+                const SizedBox(width: 10)
+              ],
+            ),
         ],
       ),
       body: const Center(
