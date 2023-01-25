@@ -1,16 +1,65 @@
 # flutter_firebase
 
-A new Flutter project.
+### What's inside
 
-## Getting Started
+- Flutter
+- Firebase
 
-This project is a starting point for a Flutter application.
+### Configure
 
-A few resources to get you started if this is your first Flutter project:
+1 - run flutter fire
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+```
+flutterfire configure
+```
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+2 - remove keys from `firebase_options.dart` and set in .env
+
+
+`.env`
+
+```
+ANDROID_apiKey='[KEY]',
+ANDROID_appId='[KEY]',
+ANDROID_messagingSenderId='[KEY]',
+ANDROID_projectId='[KEY]',
+ANDROID_storageBucket='[KEY]',
+
+IOS_apiKey='[KEY]',
+IOS_appId='[KEY]',
+IOS_messagingSenderId='[KEY]',
+IOS_projectId='[KEY]',
+IOS_storageBucket='[KEY]',
+IOS_iosClientId='[KEY]',
+IOS_iosBundleId='[KEY]',
+```
+
+`firebase_options.dart`
+
+
+```dart
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+
+...
+
+static FirebaseOptions android = FirebaseOptions(
+  apiKey: dotenv.get('ANDROID_apiKey'),
+  appId: dotenv.get('ANDROID_appId'),
+  messagingSenderId: dotenv.get('ANDROID_messagingSenderId'),
+  projectId: dotenv.get('ANDROID_projectId'),
+  storageBucket: dotenv.get('ANDROID_storageBucket'),
+);
+
+static FirebaseOptions ios = FirebaseOptions(
+  apiKey: dotenv.get('IOS_apiKey'),
+  appId: dotenv.get('IOS_appId'),
+  messagingSenderId: dotenv.get('IOS_messagingSenderId'),
+  projectId: dotenv.get('IOS_projectId'),
+  storageBucket: dotenv.get('IOS_storageBucket'),
+  iosClientId: dotenv.get('IOS_iosClientId'),
+  iosBundleId: dotenv.get('IOS_iosBundleId'),
+);
+```
+
+---
+Carlos Costa 💥 2022
