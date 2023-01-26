@@ -1,6 +1,8 @@
 # Flutter Firebase Auth
 
+<kbd>
 <img src='example.gif' width=300>
+</kbd>
 
 ### Features
 
