@@ -1,6 +1,8 @@
 # Flutter Firebase Auth
 
-<img align="right" src='example.gif' width=300>
+<kbd>
+<img align="right" src='example.gif' width=250>
+</kbd>
 
 ### Features
 
