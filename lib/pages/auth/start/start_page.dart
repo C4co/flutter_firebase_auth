@@ -28,9 +28,9 @@ class _StartPageState extends State<StartPage> {
             const Text(
               'Flutter\nFirebase',
               style: TextStyle(
-                fontSize: 70,
-                fontWeight: FontWeight.w300,
-                height: 0.85,
+                fontSize: 60,
+                fontWeight: FontWeight.w200,
+                height: 1,
                 color: Colors.white,
               ),
             ),
@@ -107,12 +107,12 @@ class _StartPageState extends State<StartPage> {
                   ),
                 );
               },
-              child: SizedBox(
+              child: const SizedBox(
                 width: double.infinity,
                 child: Center(
                   child: Text(
-                    'Começar',
-                    style: TextStyle(color: Colors.grey.shade700),
+                    'Start',
+                    style: TextStyle(color: Colors.black),
                   ),
                 ),
               ),
