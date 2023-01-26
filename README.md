@@ -1,4 +1,15 @@
-# flutter_firebase
+# Flutter Firebase Auth
+
+<img src='example.gif' width=200>
+
+### Features
+
+- ✅ Start screen
+- ✅ Login
+- ✅ Register
+- ✅ Recover password
+- ✅ Google provider auth
+- ✅ Email verification
 
 ### What's inside
 
@@ -19,19 +30,19 @@ flutterfire configure
 `.env`
 
 ```
-ANDROID_apiKey='[KEY]',
-ANDROID_appId='[KEY]',
-ANDROID_messagingSenderId='[KEY]',
-ANDROID_projectId='[KEY]',
-ANDROID_storageBucket='[KEY]',
+ANDROID_apiKey=KEY,
+ANDROID_appId=KEY,
+ANDROID_messagingSenderId=KEY,
+ANDROID_projectId=KEY,
+ANDROID_storageBucket=KEY,
 
-IOS_apiKey='[KEY]',
-IOS_appId='[KEY]',
-IOS_messagingSenderId='[KEY]',
-IOS_projectId='[KEY]',
-IOS_storageBucket='[KEY]',
-IOS_iosClientId='[KEY]',
-IOS_iosBundleId='[KEY]',
+IOS_apiKey=KEY,
+IOS_appId=KEY,
+IOS_messagingSenderId=KEY,
+IOS_projectId=KEY,
+IOS_storageBucket=KEY,
+IOS_iosClientId=KEY,
+IOS_iosBundleId=KEY,
 ```
 
 `firebase_options.dart`
