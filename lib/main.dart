@@ -5,6 +5,8 @@ import 'package:firebase_core/firebase_core.dart';
 import './firebase_options.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
+import 'core/themes/basic.theme.dart';
+
 Future<void> main(List<String> args) async {
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -15,8 +17,8 @@ Future<void> main(List<String> args) async {
   );
 
   SystemChrome.setSystemUIOverlayStyle(
-    const SystemUiOverlayStyle(
-      systemNavigationBarColor: Colors.black,
+    SystemUiOverlayStyle(
+      systemNavigationBarColor: primaryColorShades.shade900,
       statusBarColor: Colors.transparent,
     ),
   );

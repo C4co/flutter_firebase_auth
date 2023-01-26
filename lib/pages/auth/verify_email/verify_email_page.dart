@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_firebase/core/themes/basic.theme.dart';
@@ -11,8 +13,30 @@ class VerifyEmailPage extends StatefulWidget {
 }
 
 class _VerifyEmailPageState extends State<VerifyEmailPage> {
+  Timer? timer;
+
+  checkEmail(BuildContext context) {
+    timer = Timer.periodic(const Duration(seconds: 3), (insideTimer) {
+      User? user = FirebaseAuth.instance.currentUser;
+      user?.reload();
+
+      if (user?.emailVerified == true) {
+        timer?.cancel();
+        context.go('/home');
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    timer?.cancel();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
+    checkEmail(context);
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Validate your email'),
@@ -51,52 +75,19 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
             const Icon(
               Icons.mark_email_unread,
               size: 50,
-              color: Colors.red,
+              color: primaryColorShades,
             ),
             const SizedBox(height: 5),
-            Text('To continue you need to verify your email',
-                style: ProjectText.title),
+            Text(
+              'To continue you need to verify your email',
+              style: ProjectText.title,
+            ),
             const SizedBox(height: 5),
             Text(
               'If you already verified your email tap the above button to refresh the application.',
               style: ProjectText.text,
               textAlign: TextAlign.center,
             ),
-            const SizedBox(height: 50),
-            ElevatedButton(
-              onPressed: () async {
-                FirebaseAuth.instance.currentUser?.reload();
-                final User? user = FirebaseAuth.instance.currentUser;
-
-                if (!user!.emailVerified) {
-                  var snack = SnackBar(
-                    backgroundColor: Colors.red.shade700,
-                    content: Row(
-                      children: [
-                        const Icon(
-                          Icons.error,
-                          color: Colors.white,
-                        ),
-                        const SizedBox(width: 10),
-                        Text('The email ${user.email} is unverified'),
-                      ],
-                    ),
-                  );
-
-                  if (mounted) {
-                    ScaffoldMessenger.of(context).clearSnackBars();
-                    ScaffoldMessenger.of(context).showSnackBar(snack);
-                  }
-
-                  return;
-                }
-
-                if (mounted) {
-                  context.go('/home');
-                }
-              },
-              child: const Text('Refresh'),
-            )
           ],
         )),
       ),

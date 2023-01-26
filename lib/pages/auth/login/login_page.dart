@@ -15,9 +15,10 @@ class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+  final _auth = AuthService();
 
+  bool _securePassword = true;
   bool _isLoading = false;
-  final auth = AuthService();
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +36,7 @@ class _LoginPageState extends State<LoginPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Enter in Firebase Flutter',
+                  'Enter in Flutter Firebase',
                   textAlign: TextAlign.start,
                   style: ProjectText.title,
                 ),
@@ -45,7 +46,7 @@ class _LoginPageState extends State<LoginPage> {
                     const Text('Or'),
                     TextButton(
                       onPressed: () {
-                        context.go('/start/register');
+                        context.go('/start/login/register');
                       },
                       child: const Text('create new account'),
                     ),
@@ -60,14 +61,32 @@ class _LoginPageState extends State<LoginPage> {
                     ],
                   ),
                   controller: _emailController,
-                  decoration: const InputDecoration(label: Text('Email')),
+                  decoration: const InputDecoration(
+                    label: Text('Email'),
+                    prefixIcon: Icon(Icons.email),
+                  ),
                 ),
                 const SizedBox(height: 20),
                 TextFormField(
                   validator: Validatorless.required('Password is required'),
-                  obscureText: true,
+                  obscureText: _securePassword,
                   controller: _passwordController,
-                  decoration: const InputDecoration(label: Text('Password')),
+                  decoration: InputDecoration(
+                    label: const Text('Password'),
+                    prefixIcon: const Icon(Icons.lock),
+                    suffixIcon: IconButton(
+                      onPressed: () {
+                        setState(() {
+                          _securePassword = !_securePassword;
+                        });
+                      },
+                      icon: Icon(
+                        _securePassword
+                            ? Icons.visibility_off
+                            : Icons.visibility,
+                      ),
+                    ),
+                  ),
                 ),
                 const SizedBox(height: 5),
                 TextButton(
@@ -93,7 +112,7 @@ class _LoginPageState extends State<LoginPage> {
                           _isLoading = true;
                         });
 
-                        String? result = await auth.login(
+                        String? result = await _auth.login(
                           email: _emailController.text,
                           password: _passwordController.text,
                         );

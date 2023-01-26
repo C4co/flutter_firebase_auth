@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_firebase/core/themes/basic.theme.dart';
 import 'package:go_router/go_router.dart';
 import 'package:validatorless/validatorless.dart';
-
 import '/core/services/firebase_auth.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -16,8 +15,10 @@ class _RegisterPageState extends State<RegisterPage> {
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+  final _auth = AuthService();
+
+  bool _securePassword = true;
   bool _isLoading = false;
-  final auth = AuthService();
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +36,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Register in Firebase Flutter',
+                    'Register in Flutter Firebase',
                     textAlign: TextAlign.start,
                     style: ProjectText.title,
                   ),
@@ -60,19 +61,37 @@ class _RegisterPageState extends State<RegisterPage> {
                         Validatorless.email('Invalid email'),
                       ],
                     ),
-                    decoration: const InputDecoration(label: Text('Email')),
+                    decoration: const InputDecoration(
+                      label: Text('Email'),
+                      prefixIcon: Icon(Icons.email),
+                    ),
                   ),
                   const SizedBox(height: 20),
                   TextFormField(
                     controller: _passwordController,
+                    obscureText: _securePassword,
                     validator: Validatorless.multiple(
                       [
                         Validatorless.required('Password is required'),
                         Validatorless.min(6, 'Must be at least 6 characters'),
                       ],
                     ),
-                    obscureText: true,
-                    decoration: const InputDecoration(label: Text('Password')),
+                    decoration: InputDecoration(
+                      label: const Text('Password'),
+                      prefixIcon: const Icon(Icons.lock),
+                      suffixIcon: IconButton(
+                        onPressed: () {
+                          setState(() {
+                            _securePassword = !_securePassword;
+                          });
+                        },
+                        icon: Icon(
+                          _securePassword
+                              ? Icons.visibility_off
+                              : Icons.visibility,
+                        ),
+                      ),
+                    ),
                   ),
                   const SizedBox(height: 20),
                   if (_isLoading)
@@ -91,7 +110,7 @@ class _RegisterPageState extends State<RegisterPage> {
                             _isLoading = true;
                           });
 
-                          String? result = await auth.registration(
+                          String? result = await _auth.registration(
                             email: _emailController.text,
                             password: _passwordController.text,
                           );

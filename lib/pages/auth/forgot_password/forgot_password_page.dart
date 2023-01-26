@@ -31,7 +31,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Recover password',
+                  'Problem with password?',
                   textAlign: TextAlign.start,
                   style: ProjectText.title,
                 ),
@@ -50,7 +50,8 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                     ],
                   ),
                   controller: _emailController,
-                  decoration: const InputDecoration(label: Text('Email')),
+                  decoration: const InputDecoration(
+                      label: Text('Email'), prefixIcon: Icon(Icons.mail)),
                 ),
                 const SizedBox(height: 20),
                 if (_isLoading)

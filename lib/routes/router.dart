@@ -47,14 +47,14 @@ final router = GoRouter(
           builder: (context, state) => const LoginPage(),
           routes: [
             GoRoute(
+              path: 'register',
+              builder: (context, state) => const RegisterPage(),
+            ),
+            GoRoute(
               path: 'forgot_password',
               builder: (context, state) => const ForgotPasswordPage(),
             ),
           ],
-        ),
-        GoRoute(
-          path: 'register',
-          builder: (context, state) => const RegisterPage(),
         ),
       ],
     ),
