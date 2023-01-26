@@ -1,6 +1,6 @@
 # Flutter Firebase Auth
 
-<img src='example.gif' width=200>
+<img align="right" src='example.gif' width=200>
 
 ### Features
 
@@ -11,10 +11,14 @@
 - ✅ Google provider auth
 - ✅ Email verification
 
+
 ### What's inside
 
 - Flutter
 - Firebase
+
+<div style="clear:both"></div>
+
 
 ### Configure
 
