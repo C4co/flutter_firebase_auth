@@ -4,13 +4,12 @@
 
 ### Features
 
-- ✅ Start screen
-- ✅ Login
-- ✅ Register
-- ✅ Recover password
-- ✅ Google provider auth
-- ✅ Email verification
-
+- Start screen
+- Login
+- Register
+- Recover password
+- Google provider auth
+- Email verification
 
 ### What's inside
 
@@ -18,7 +17,6 @@
 - Firebase
 
 <div style="clear:both"></div>
-
 
 ### Configure
 
