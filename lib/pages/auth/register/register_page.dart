@@ -35,10 +35,10 @@ class _RegisterPageState extends State<RegisterPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
+                  const Text(
                     'Register in Flutter Firebase',
                     textAlign: TextAlign.start,
-                    style: ProjectText.title,
+                    style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 5),
                   Row(
@@ -103,7 +103,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       ),
                     ),
                   if (!_isLoading)
-                    ElevatedButton(
+                    FilledButton(
                       onPressed: () async {
                         if (_formKey.currentState!.validate()) {
                           setState(() {

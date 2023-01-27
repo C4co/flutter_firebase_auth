@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_firebase/core/services/firebase_auth.dart';
 import 'package:fluttericon/font_awesome5_icons.dart';
 import 'package:go_router/go_router.dart';
-import '/core/themes/basic.theme.dart';
 
 class StartPage extends StatefulWidget {
   const StartPage({super.key});
@@ -18,7 +17,6 @@ class _StartPageState extends State<StartPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        color: primaryColorShades,
         padding: const EdgeInsets.all(20),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -29,18 +27,14 @@ class _StartPageState extends State<StartPage> {
               'Flutter\nFirebase',
               style: TextStyle(
                 fontSize: 60,
-                fontWeight: FontWeight.w200,
+                fontWeight: FontWeight.w300,
                 height: 1,
-                color: Colors.white,
               ),
             ),
             const SizedBox(
               height: 40,
             ),
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.white,
-              ),
+            FilledButton(
               onPressed: () {
                 showModalBottomSheet(
                   context: context,
@@ -81,27 +75,33 @@ class _StartPageState extends State<StartPage> {
                             }
                           },
                           title: Row(
-                            children: const [
-                              Icon(FontAwesome5.google, color: Colors.red),
-                              SizedBox(width: 20),
-                              Text('Continue with google'),
+                            children: [
+                              Icon(
+                                FontAwesome5.google,
+                                color: Theme.of(context).colorScheme.primary,
+                              ),
+                              const SizedBox(width: 20),
+                              const Text('Continue with google'),
                             ],
                           ),
                         ),
-                        Divider(height: 1, color: Colors.grey.shade600),
+                        const Divider(height: 1),
                         ListTile(
                           onTap: () {
                             context.go('/start/login');
                           },
                           title: Row(
-                            children: const [
-                              Icon(FontAwesome5.envelope, color: Colors.grey),
-                              SizedBox(width: 20),
-                              Text('Login with email and password'),
+                            children: [
+                              Icon(
+                                FontAwesome5.envelope,
+                                color: Theme.of(context).colorScheme.primary,
+                              ),
+                              const SizedBox(width: 20),
+                              const Text('Login with email and password'),
                             ],
                           ),
                         ),
-                        Divider(height: 1, color: Colors.grey.shade600),
+                        const Divider(height: 1),
                       ],
                     ),
                   ),
@@ -110,10 +110,7 @@ class _StartPageState extends State<StartPage> {
               child: const SizedBox(
                 width: double.infinity,
                 child: Center(
-                  child: Text(
-                    'Start',
-                    style: TextStyle(color: Colors.black),
-                  ),
+                  child: Text('Start'),
                 ),
               ),
             )

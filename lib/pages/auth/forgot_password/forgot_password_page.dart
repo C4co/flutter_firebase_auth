@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_firebase/core/services/firebase_auth.dart';
 import 'package:validatorless/validatorless.dart';
-import '/core/themes/basic.theme.dart';
 
 class ForgotPasswordPage extends StatefulWidget {
   const ForgotPasswordPage({super.key});
@@ -30,16 +29,17 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
+                const Text(
                   'Problem with password?',
                   textAlign: TextAlign.start,
-                  style: ProjectText.title,
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
                 const SizedBox(height: 5),
-                Text(
+                const Text(
                   'Enter your email to receiver a link to reset your password',
                   textAlign: TextAlign.start,
-                  style: ProjectText.text,
                 ),
                 const SizedBox(height: 20),
                 TextFormField(
@@ -63,7 +63,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                     ),
                   ),
                 if (!_isLoading && !_isSuccess)
-                  ElevatedButton(
+                  FilledButton(
                     onPressed: () async {
                       // check email here!
                       if (_formKey.currentState!.validate()) {

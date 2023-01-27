@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_firebase/core/themes/basic.theme.dart';
 import 'package:go_router/go_router.dart';
 
 class VerifyEmailPage extends StatefulWidget {
@@ -71,21 +70,19 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
         child: Center(
             child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Icon(
+          children: const [
+            Icon(
               Icons.mark_email_unread,
               size: 50,
-              color: primaryColorShades,
             ),
-            const SizedBox(height: 5),
+            SizedBox(height: 5),
             Text(
               'To continue you need to verify your email',
-              style: ProjectText.title,
+              style: TextStyle(fontWeight: FontWeight.bold),
             ),
-            const SizedBox(height: 5),
+            SizedBox(height: 5),
             Text(
               'If you already verified your email tap the above button to refresh the application.',
-              style: ProjectText.text,
               textAlign: TextAlign.center,
             ),
           ],

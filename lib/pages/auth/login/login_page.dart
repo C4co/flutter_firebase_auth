@@ -35,10 +35,10 @@ class _LoginPageState extends State<LoginPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
+                const Text(
                   'Enter in Flutter Firebase',
                   textAlign: TextAlign.start,
-                  style: ProjectText.title,
+                  style: TextStyle(fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(height: 5),
                 Row(
@@ -105,7 +105,7 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                 if (!_isLoading)
-                  ElevatedButton(
+                  FilledButton(
                     onPressed: () async {
                       if (_formKey.currentState!.validate()) {
                         setState(() {

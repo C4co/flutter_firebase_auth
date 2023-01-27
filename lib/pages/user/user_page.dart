@@ -41,7 +41,10 @@ class _UserPageState extends State<UserPage> {
                 ),
               );
             },
-            icon: const Icon(Icons.logout),
+            icon: Icon(
+              Icons.logout,
+              color: Theme.of(context).colorScheme.error,
+            ),
           )
         ],
       ),
@@ -54,9 +57,8 @@ class _UserPageState extends State<UserPage> {
                 ListTile(
                   title: Text('${user?.displayName}'),
                 ),
-                Divider(
+                const Divider(
                   height: 1,
-                  color: Colors.grey.shade500,
                 ),
               ],
             ),
@@ -68,9 +70,8 @@ class _UserPageState extends State<UserPage> {
                 ListTile(
                   title: Text('${user?.email}'),
                 ),
-                Divider(
+                const Divider(
                   height: 1,
-                  color: Colors.grey.shade500,
                 ),
               ],
             ),
@@ -82,9 +83,8 @@ class _UserPageState extends State<UserPage> {
                 ListTile(
                   title: Text('${user?.uid}'),
                 ),
-                Divider(
+                const Divider(
                   height: 1,
-                  color: Colors.grey.shade500,
                 ),
               ],
             ),
