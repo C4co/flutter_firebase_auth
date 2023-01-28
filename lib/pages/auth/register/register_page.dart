@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_firebase/core/themes/basic.theme.dart';
 import 'package:go_router/go_router.dart';
 import 'package:validatorless/validatorless.dart';
 import '/core/services/firebase_auth.dart';
@@ -35,10 +34,10 @@ class _RegisterPageState extends State<RegisterPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
-                    'Register in Flutter Firebase',
+                  Text(
+                    'Create new account',
                     textAlign: TextAlign.start,
-                    style: TextStyle(fontWeight: FontWeight.bold),
+                    style: Theme.of(context).textTheme.bodyLarge,
                   ),
                   const SizedBox(height: 5),
                   Row(
@@ -115,15 +114,12 @@ class _RegisterPageState extends State<RegisterPage> {
                             password: _passwordController.text,
                           );
 
-                          if (result == 'Success') {
-                            if (mounted) {
+                          if (mounted) {
+                            if (result == 'Success') {
                               context.go('/');
+                              return;
                             }
 
-                            return;
-                          }
-
-                          if (mounted) {
                             var snack = SnackBar(
                               backgroundColor: Colors.red.shade700,
                               content: Row(

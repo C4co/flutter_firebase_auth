@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_firebase/core/services/firebase_auth.dart';
 import 'package:validatorless/validatorless.dart';
+import '/core/services/firebase_auth.dart';
 
 class ForgotPasswordPage extends StatefulWidget {
   const ForgotPasswordPage({super.key});
@@ -29,14 +29,6 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
-                  'Problem with password?',
-                  textAlign: TextAlign.start,
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                const SizedBox(height: 5),
                 const Text(
                   'Enter your email to receiver a link to reset your password',
                   textAlign: TextAlign.start,
@@ -75,39 +67,37 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                           email: _emailController.text,
                         );
 
-                        if (result == 'Success') {
+                        if (mounted) {
+                          if (result == 'Success') {
+                            var snack = SnackBar(
+                              content: Row(
+                                children: const [
+                                  Text('Email sended'),
+                                ],
+                              ),
+                            );
+
+                            ScaffoldMessenger.of(context).clearSnackBars();
+                            ScaffoldMessenger.of(context).showSnackBar(snack);
+
+                            setState(() {
+                              _isLoading = false;
+                              _isSuccess = true;
+                            });
+
+                            return;
+                          }
+
                           var snack = SnackBar(
-                            backgroundColor: Colors.green.shade700,
+                            backgroundColor:
+                                Theme.of(context).colorScheme.error,
                             content: Row(
-                              children: const [
-                                Text('Email sended'),
+                              children: [
+                                Text(result!),
                               ],
                             ),
                           );
 
-                          if (mounted) {
-                            ScaffoldMessenger.of(context).clearSnackBars();
-                            ScaffoldMessenger.of(context).showSnackBar(snack);
-                          }
-
-                          setState(() {
-                            _isLoading = false;
-                            _isSuccess = true;
-                          });
-
-                          return;
-                        }
-
-                        var snack = SnackBar(
-                          backgroundColor: Colors.red.shade700,
-                          content: Row(
-                            children: [
-                              Text(result!),
-                            ],
-                          ),
-                        );
-
-                        if (mounted) {
                           ScaffoldMessenger.of(context).clearSnackBars();
                           ScaffoldMessenger.of(context).showSnackBar(snack);
                         }

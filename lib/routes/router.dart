@@ -1,10 +1,10 @@
-import 'package:flutter_firebase/pages/auth/forgot_password/forgot_password_page.dart';
-import 'package:flutter_firebase/pages/auth/start/start_page.dart';
-import 'package:flutter_firebase/pages/auth/verify_email/verify_email_page.dart';
-import 'package:flutter_firebase/pages/home/home_page.dart';
-import 'package:flutter_firebase/pages/auth/login/login_page.dart';
-import 'package:flutter_firebase/pages/auth/register/register_page.dart';
-import 'package:flutter_firebase/pages/user/user_page.dart';
+import 'package:flutter_firebase_auth/pages/auth/forgot_password/forgot_password_page.dart';
+import 'package:flutter_firebase_auth/pages/auth/start/start_page.dart';
+import 'package:flutter_firebase_auth/pages/auth/verify_email/verify_email_page.dart';
+import 'package:flutter_firebase_auth/pages/home/home_page.dart';
+import 'package:flutter_firebase_auth/pages/auth/login/login_page.dart';
+import 'package:flutter_firebase_auth/pages/auth/register/register_page.dart';
+import 'package:flutter_firebase_auth/pages/user/user_page.dart';
 import 'package:go_router/go_router.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 

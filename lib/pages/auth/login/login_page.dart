@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:validatorless/validatorless.dart';
 import '/core/services/firebase_auth.dart';
-import '/core/themes/basic.theme.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -35,10 +34,10 @@ class _LoginPageState extends State<LoginPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
-                  'Enter in Flutter Firebase',
+                Text(
+                  'Enter in flutter firebase',
                   textAlign: TextAlign.start,
-                  style: TextStyle(fontWeight: FontWeight.bold),
+                  style: Theme.of(context).textTheme.bodyLarge,
                 ),
                 const SizedBox(height: 5),
                 Row(
@@ -117,16 +116,14 @@ class _LoginPageState extends State<LoginPage> {
                           password: _passwordController.text,
                         );
 
-                        // success
-                        if (result == 'Success') {
-                          if (mounted) {
-                            context.go('/');
-                          }
-                          return;
-                        }
-
-                        // error
                         if (mounted) {
+                          // success
+                          if (result == 'Success') {
+                            context.go('/');
+                            return;
+                          }
+
+                          // error
                           var snack = SnackBar(
                             backgroundColor: Colors.red.shade700,
                             content: Row(

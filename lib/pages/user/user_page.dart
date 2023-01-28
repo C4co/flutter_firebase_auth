@@ -41,9 +41,8 @@ class _UserPageState extends State<UserPage> {
                 ),
               );
             },
-            icon: Icon(
+            icon: const Icon(
               Icons.logout,
-              color: Theme.of(context).colorScheme.error,
             ),
           )
         ],
