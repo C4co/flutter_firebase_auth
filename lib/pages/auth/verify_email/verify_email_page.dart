@@ -16,6 +16,12 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
   String emailSended = 'no';
   int counter = 100;
 
+  @override
+  void dispose() {
+    timer?.cancel();
+    super.dispose();
+  }
+
   checkEmail(BuildContext context) {
     timer = Timer.periodic(const Duration(seconds: 3), (insideTimer) {
       User? user = FirebaseAuth.instance.currentUser;
@@ -26,12 +32,6 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
         context.go('/home');
       }
     });
-  }
-
-  @override
-  void dispose() {
-    timer?.cancel();
-    super.dispose();
   }
 
   tictac() {
@@ -50,6 +50,22 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
         });
       }
     });
+  }
+
+  SnackBar getSnack(String text) {
+    return SnackBar(
+      content: Row(
+        children: [
+          const SizedBox(width: 10),
+          Flexible(
+            child: Text(
+              text,
+              overflow: TextOverflow.fade,
+            ),
+          ),
+        ],
+      ),
+    );
   }
 
   @override
@@ -127,7 +143,25 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
                   setState(() {
                     emailSended = 'loading';
                   });
-                  await Future.delayed(const Duration(seconds: 3));
+
+                  try {
+                    await FirebaseAuth.instance.currentUser
+                        ?.sendEmailVerification();
+
+                    var snack = getSnack('Email sended');
+
+                    if (mounted) {
+                      ScaffoldMessenger.of(context).clearSnackBars();
+                      ScaffoldMessenger.of(context).showSnackBar(snack);
+                    }
+                  } catch (e) {
+                    var snack = getSnack('Email sended');
+
+                    if (mounted) {
+                      ScaffoldMessenger.of(context).clearSnackBars();
+                      ScaffoldMessenger.of(context).showSnackBar(snack);
+                    }
+                  }
 
                   tictac();
                 },

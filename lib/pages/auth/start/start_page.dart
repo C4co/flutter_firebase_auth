@@ -16,6 +16,7 @@ class _StartPageState extends State<StartPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(),
       body: Container(
         padding: const EdgeInsets.all(20),
         child: Column(
@@ -46,15 +47,13 @@ class _StartPageState extends State<StartPage> {
                           onTap: () async {
                             String result = await _auth.signInWithGoogle();
 
-                            if (result == 'Success') {
-                              if (mounted) {
+                            if (mounted) {
+                              if (result == 'Success') {
                                 context.go('/');
+
+                                return;
                               }
 
-                              return;
-                            }
-
-                            if (mounted) {
                               var snack = SnackBar(
                                 backgroundColor: Colors.red.shade700,
                                 content: Row(

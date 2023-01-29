@@ -39,7 +39,6 @@ class _RegisterPageState extends State<RegisterPage> {
                     textAlign: TextAlign.start,
                     style: Theme.of(context).textTheme.bodyLarge,
                   ),
-                  const SizedBox(height: 5),
                   Row(
                     children: [
                       const Text('Or'),
@@ -51,7 +50,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       ),
                     ],
                   ),
-                  const SizedBox(height: 5),
+                  const SizedBox(height: 20),
                   TextFormField(
                     controller: _emailController,
                     validator: Validatorless.multiple(
