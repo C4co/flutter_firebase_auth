@@ -10,6 +10,7 @@
 - Login
 - Register
 - Recover password
+- Resend email verification
 - Google provider auth
 - Email verification
 
@@ -45,6 +46,7 @@ IOS_appId=KEY,
 IOS_messagingSenderId=KEY,
 IOS_projectId=KEY,
 IOS_storageBucket=KEY,
+IOS_androidClientId=KEY
 IOS_iosClientId=KEY,
 IOS_iosBundleId=KEY,
 ```
@@ -71,6 +73,7 @@ static FirebaseOptions ios = FirebaseOptions(
   messagingSenderId: dotenv.get('IOS_messagingSenderId'),
   projectId: dotenv.get('IOS_projectId'),
   storageBucket: dotenv.get('IOS_storageBucket'),
+  androidClientId: dotenv.get('IOS_androidClientId'),
   iosClientId: dotenv.get('IOS_iosClientId'),
   iosBundleId: dotenv.get('IOS_iosBundleId'),
 );
