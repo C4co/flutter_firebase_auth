@@ -3,6 +3,7 @@
 import 'package:firebase_core/firebase_core.dart' show FirebaseOptions;
 import 'package:flutter/foundation.dart'
     show defaultTargetPlatform, kIsWeb, TargetPlatform;
+
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 /// Default [FirebaseOptions] for use with your Firebase apps.
@@ -64,6 +65,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: dotenv.get('IOS_messagingSenderId'),
     projectId: dotenv.get('IOS_projectId'),
     storageBucket: dotenv.get('IOS_storageBucket'),
+    androidClientId: dotenv.get('IOS_androidClientId'),
     iosClientId: dotenv.get('IOS_iosClientId'),
     iosBundleId: dotenv.get('IOS_iosBundleId'),
   );
