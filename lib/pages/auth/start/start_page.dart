@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fluttericon/font_awesome5_icons.dart';
 import 'package:go_router/go_router.dart';
-import 'package:flutter_firebase_auth/core/services/firebase_auth.dart';
+import '/core/core.dart' show AuthService;
 
 class StartPage extends StatefulWidget {
   const StartPage({super.key});

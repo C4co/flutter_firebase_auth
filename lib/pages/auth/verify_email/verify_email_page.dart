@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -12,23 +11,23 @@ class VerifyEmailPage extends StatefulWidget {
 }
 
 class _VerifyEmailPageState extends State<VerifyEmailPage> {
-  Timer? timer;
-  String emailSended = 'no';
-  int counter = 100;
+  Timer? _timer;
+  String _emailSended = 'no';
+  int _counter = 100;
 
   @override
   void dispose() {
-    timer?.cancel();
+    _timer?.cancel();
     super.dispose();
   }
 
   checkEmail(BuildContext context) {
-    timer = Timer.periodic(const Duration(seconds: 3), (insideTimer) {
+    _timer = Timer.periodic(const Duration(seconds: 3), (insideTimer) {
       User? user = FirebaseAuth.instance.currentUser;
       user?.reload();
 
       if (user?.emailVerified == true) {
-        timer?.cancel();
+        _timer?.cancel();
         context.go('/home');
       }
     });
@@ -37,16 +36,16 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
   tictac() {
     Timer.periodic(const Duration(seconds: 1), (timer) {
       setState(() {
-        emailSended = 'yes';
-        counter--;
+        _emailSended = 'yes';
+        _counter--;
       });
 
-      if (counter == 0) {
+      if (_counter == 0) {
         debugPrint('Ressend email again');
         timer.cancel();
         setState(() {
-          counter = 100;
-          emailSended = 'no';
+          _counter = 100;
+          _emailSended = 'no';
         });
       }
     });
@@ -131,17 +130,17 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 15),
-            if (emailSended == 'loading')
+            if (_emailSended == 'loading')
               const SizedBox(
                 width: 20,
                 height: 20,
                 child: CircularProgressIndicator(),
               ),
-            if (emailSended == 'no')
+            if (_emailSended == 'no')
               FilledButton(
                 onPressed: () async {
                   setState(() {
-                    emailSended = 'loading';
+                    _emailSended = 'loading';
                   });
 
                   try {
@@ -167,10 +166,10 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
                 },
                 child: const Text('Ressend email'),
               ),
-            if (emailSended == 'yes')
+            if (_emailSended == 'yes')
               FilledButton(
                 onPressed: null,
-                child: Text('Ressend email $counter'),
+                child: Text('Ressend email $_counter'),
               ),
           ],
         )),

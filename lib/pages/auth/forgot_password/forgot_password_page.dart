@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:validatorless/validatorless.dart';
-import '/core/services/firebase_auth.dart';
+import '/core/core.dart' show AuthService;
 
 class ForgotPasswordPage extends StatefulWidget {
   const ForgotPasswordPage({super.key});
