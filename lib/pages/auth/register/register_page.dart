@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_firebase_auth/core/components/loading.dart';
+import 'package:flutter_firebase_auth/core/components/snackbar.dart';
 import 'package:go_router/go_router.dart';
 import 'package:validatorless/validatorless.dart';
 import '/core/core.dart' show AuthService;
@@ -18,6 +20,36 @@ class _RegisterPageState extends State<RegisterPage> {
 
   bool _securePassword = true;
   bool _isLoading = false;
+
+  registerHandle() async {
+    if (_formKey.currentState!.validate()) {
+      setState(() {
+        _isLoading = true;
+      });
+
+      String? result = await _auth.registration(
+        email: _emailController.text,
+        password: _passwordController.text,
+      );
+
+      if (mounted) {
+        if (result == 'Success') {
+          context.go('/');
+          return;
+        }
+
+        AppSnackBar.show(
+          message: result!,
+          context: context,
+          error: true,
+        );
+      }
+
+      setState(() {
+        _isLoading = false;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -94,49 +126,12 @@ class _RegisterPageState extends State<RegisterPage> {
                   const SizedBox(height: 20),
                   if (_isLoading)
                     const Center(
-                      child: SizedBox(
-                        height: 20,
-                        width: 20,
-                        child: CircularProgressIndicator(),
-                      ),
+                      child: Loading(),
                     ),
                   if (!_isLoading)
                     FilledButton(
-                      onPressed: () async {
-                        if (_formKey.currentState!.validate()) {
-                          setState(() {
-                            _isLoading = true;
-                          });
-
-                          String? result = await _auth.registration(
-                            email: _emailController.text,
-                            password: _passwordController.text,
-                          );
-
-                          if (mounted) {
-                            if (result == 'Success') {
-                              context.go('/');
-                              return;
-                            }
-
-                            var snack = SnackBar(
-                              backgroundColor: Colors.red.shade700,
-                              content: Row(
-                                children: [
-                                  const SizedBox(width: 10),
-                                  Text(result!),
-                                ],
-                              ),
-                            );
-
-                            ScaffoldMessenger.of(context).clearSnackBars();
-                            ScaffoldMessenger.of(context).showSnackBar(snack);
-                          }
-
-                          setState(() {
-                            _isLoading = false;
-                          });
-                        }
+                      onPressed: () {
+                        registerHandle();
                       },
                       child: const SizedBox(
                         width: double.infinity,

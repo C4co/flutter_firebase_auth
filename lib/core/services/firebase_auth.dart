@@ -90,4 +90,14 @@ class AuthService {
       return 'Could not complete authentication';
     }
   }
+
+  Future<String> sendEmailVerification() async {
+    try {
+      await FirebaseAuth.instance.currentUser?.sendEmailVerification();
+
+      return 'Success';
+    } catch (e) {
+      return e.toString();
+    }
+  }
 }

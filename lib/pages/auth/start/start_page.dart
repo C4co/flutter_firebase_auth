@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fluttericon/font_awesome5_icons.dart';
 import 'package:go_router/go_router.dart';
-import '/core/core.dart' show AuthService;
+import '/core/core.dart' show AuthService, AppSnackBar;
 
 class StartPage extends StatefulWidget {
   const StartPage({super.key});
@@ -12,6 +12,20 @@ class StartPage extends StatefulWidget {
 
 class _StartPageState extends State<StartPage> {
   final _auth = AuthService();
+
+  continueWithGoogle() async {
+    String result = await _auth.signInWithGoogle();
+
+    if (mounted) {
+      if (result == 'Success') {
+        context.go('/');
+
+        return;
+      }
+
+      AppSnackBar.show(message: result, context: context);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -44,34 +58,8 @@ class _StartPageState extends State<StartPage> {
                     child: Column(
                       children: [
                         ListTile(
-                          onTap: () async {
-                            String result = await _auth.signInWithGoogle();
-
-                            if (mounted) {
-                              if (result == 'Success') {
-                                context.go('/');
-
-                                return;
-                              }
-
-                              var snack = SnackBar(
-                                backgroundColor: Colors.red.shade700,
-                                content: Row(
-                                  children: [
-                                    const SizedBox(width: 10),
-                                    Flexible(
-                                      child: Text(
-                                        result,
-                                        overflow: TextOverflow.fade,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              );
-
-                              ScaffoldMessenger.of(context).clearSnackBars();
-                              ScaffoldMessenger.of(context).showSnackBar(snack);
-                            }
+                          onTap: () {
+                            continueWithGoogle();
                           },
                           title: Row(
                             children: [

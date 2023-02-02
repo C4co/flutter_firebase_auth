@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_firebase_auth/core/components/loading.dart';
+import 'package:flutter_firebase_auth/core/components/snackbar.dart';
 import 'package:validatorless/validatorless.dart';
 import '/core/core.dart' show AuthService;
 
@@ -15,6 +17,44 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
   final _auth = AuthService();
   bool _isLoading = false;
   bool _isSuccess = false;
+
+  submitHandle(BuildContext context) async {
+    if (_formKey.currentState!.validate()) {
+      setState(() {
+        _isLoading = true;
+      });
+
+      String? result = await _auth.forgotPassword(
+        email: _emailController.text,
+      );
+
+      if (mounted) {
+        if (result == 'Success') {
+          AppSnackBar.show(
+            message: 'Email sended',
+            context: context,
+          );
+
+          setState(() {
+            _isLoading = false;
+            _isSuccess = true;
+          });
+
+          return;
+        }
+
+        AppSnackBar.show(
+          message: result!,
+          context: context,
+          error: true,
+        );
+      }
+
+      setState(() {
+        _isLoading = false;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,67 +86,10 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                       label: Text('Email'), prefixIcon: Icon(Icons.mail)),
                 ),
                 const SizedBox(height: 20),
-                if (_isLoading)
-                  const Center(
-                    child: SizedBox(
-                      width: 20,
-                      height: 20,
-                      child: CircularProgressIndicator(),
-                    ),
-                  ),
+                if (_isLoading) const Loading(),
                 if (!_isLoading && !_isSuccess)
                   FilledButton(
-                    onPressed: () async {
-                      // check email here!
-                      if (_formKey.currentState!.validate()) {
-                        setState(() {
-                          _isLoading = true;
-                        });
-
-                        String? result = await _auth.forgotPassword(
-                          email: _emailController.text,
-                        );
-
-                        if (mounted) {
-                          if (result == 'Success') {
-                            var snack = SnackBar(
-                              content: Row(
-                                children: const [
-                                  Text('Email sended'),
-                                ],
-                              ),
-                            );
-
-                            ScaffoldMessenger.of(context).clearSnackBars();
-                            ScaffoldMessenger.of(context).showSnackBar(snack);
-
-                            setState(() {
-                              _isLoading = false;
-                              _isSuccess = true;
-                            });
-
-                            return;
-                          }
-
-                          var snack = SnackBar(
-                            backgroundColor:
-                                Theme.of(context).colorScheme.error,
-                            content: Row(
-                              children: [
-                                Text(result!),
-                              ],
-                            ),
-                          );
-
-                          ScaffoldMessenger.of(context).clearSnackBars();
-                          ScaffoldMessenger.of(context).showSnackBar(snack);
-                        }
-
-                        setState(() {
-                          _isLoading = false;
-                        });
-                      }
-                    },
+                    onPressed: () => {submitHandle(context)},
                     child: const SizedBox(
                       width: double.infinity,
                       child: Center(child: Text('Submit')),

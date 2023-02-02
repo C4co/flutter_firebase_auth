@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import '/core/core.dart';
 
 class UserPage extends StatefulWidget {
   const UserPage({super.key});
@@ -12,6 +13,13 @@ class UserPage extends StatefulWidget {
 class _UserPageState extends State<UserPage> {
   User? user = FirebaseAuth.instance.currentUser;
 
+  leaveApplication(BuildContext context) async {
+    await FirebaseAuth.instance.signOut();
+    if (mounted) {
+      context.go('/');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,23 +30,18 @@ class _UserPageState extends State<UserPage> {
         actions: [
           IconButton(
             onPressed: () async {
-              showDialog(
+              AppDialog.show(
+                title: 'Leave',
                 context: context,
-                builder: (context) => AlertDialog(
-                  title: const Text('Logout'),
-                  content: const Text('Are you sure to leave the application'),
-                  actions: [
-                    TextButton(
-                      onPressed: () async {
-                        await FirebaseAuth.instance.signOut();
-                        if (mounted) {
-                          context.go('/');
-                        }
-                      },
-                      child: const Text('Yes'),
-                    )
-                  ],
-                ),
+                content: 'Are you sure to leave the application?',
+                actions: [
+                  TextButton(
+                    onPressed: () {
+                      leaveApplication(context);
+                    },
+                    child: const Text('Yes'),
+                  )
+                ],
               );
             },
             icon: const Icon(

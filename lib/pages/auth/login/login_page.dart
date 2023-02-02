@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_firebase_auth/core/components/loading.dart';
+import 'package:flutter_firebase_auth/core/components/snackbar.dart';
 import 'package:go_router/go_router.dart';
 import 'package:validatorless/validatorless.dart';
 import '/core/core.dart' show AuthService;
@@ -18,6 +20,37 @@ class _LoginPageState extends State<LoginPage> {
 
   bool _securePassword = true;
   bool _isLoading = false;
+
+  submitHandle(BuildContext context) async {
+    if (_formKey.currentState!.validate()) {
+      setState(() {
+        _isLoading = true;
+      });
+
+      String? result = await _auth.login(
+        email: _emailController.text,
+        password: _passwordController.text,
+      );
+
+      if (mounted) {
+        // success
+        if (result == 'Success') {
+          context.go('/');
+          return;
+        }
+
+        AppSnackBar.show(
+          message: result!,
+          context: context,
+          error: true,
+        );
+      }
+
+      setState(() {
+        _isLoading = false;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -96,56 +129,12 @@ class _LoginPageState extends State<LoginPage> {
                   const SizedBox(height: 5),
                   if (_isLoading)
                     const Center(
-                      child: SizedBox(
-                        height: 20,
-                        width: 20,
-                        child: CircularProgressIndicator(),
-                      ),
+                      child: Loading(),
                     ),
                   if (!_isLoading)
                     FilledButton(
-                      onPressed: () async {
-                        if (_formKey.currentState!.validate()) {
-                          setState(() {
-                            _isLoading = true;
-                          });
-
-                          String? result = await _auth.login(
-                            email: _emailController.text,
-                            password: _passwordController.text,
-                          );
-
-                          if (mounted) {
-                            // success
-                            if (result == 'Success') {
-                              context.go('/');
-                              return;
-                            }
-
-                            // error
-                            var snack = SnackBar(
-                              backgroundColor: Colors.red.shade700,
-                              content: Row(
-                                children: [
-                                  const SizedBox(width: 10),
-                                  Flexible(
-                                    child: Text(
-                                      result!,
-                                      overflow: TextOverflow.fade,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            );
-
-                            ScaffoldMessenger.of(context).clearSnackBars();
-                            ScaffoldMessenger.of(context).showSnackBar(snack);
-                          }
-
-                          setState(() {
-                            _isLoading = false;
-                          });
-                        }
+                      onPressed: () {
+                        submitHandle(context);
                       },
                       child: const SizedBox(
                         width: double.infinity,

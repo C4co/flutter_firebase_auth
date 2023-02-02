@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_firebase_auth/core/components/loading.dart';
+import 'package:flutter_firebase_auth/core/core.dart';
 import 'package:go_router/go_router.dart';
 
 class VerifyEmailPage extends StatefulWidget {
@@ -11,30 +13,36 @@ class VerifyEmailPage extends StatefulWidget {
 }
 
 class _VerifyEmailPageState extends State<VerifyEmailPage> {
-  Timer? _timer;
+  Timer? _checkEmailtimer;
+  Timer? _ticTacTimer;
   String _emailSended = 'no';
   int _counter = 100;
+  final _auth = AuthService();
 
   @override
   void dispose() {
-    _timer?.cancel();
+    _checkEmailtimer?.cancel();
+    _ticTacTimer?.cancel();
     super.dispose();
   }
 
   checkEmail(BuildContext context) {
-    _timer = Timer.periodic(const Duration(seconds: 3), (insideTimer) {
+    _checkEmailtimer = Timer.periodic(const Duration(seconds: 3), (timer) {
       User? user = FirebaseAuth.instance.currentUser;
       user?.reload();
 
       if (user?.emailVerified == true) {
-        _timer?.cancel();
-        context.go('/home');
+        timer.cancel();
+
+        if (context.mounted) {
+          context.go('/home');
+        }
       }
     });
   }
 
   tictac() {
-    Timer.periodic(const Duration(seconds: 1), (timer) {
+    _ticTacTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
       setState(() {
         _emailSended = 'yes';
         _counter--;
@@ -51,20 +59,29 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
     });
   }
 
-  SnackBar getSnack(String text) {
-    return SnackBar(
-      content: Row(
-        children: [
-          const SizedBox(width: 10),
-          Flexible(
-            child: Text(
-              text,
-              overflow: TextOverflow.fade,
-            ),
-          ),
-        ],
-      ),
-    );
+  handleSendEmail() async {
+    setState(() {
+      _emailSended = 'loading';
+    });
+
+    var result = await _auth.sendEmailVerification();
+
+    if (mounted) {
+      if (result == 'Success') {
+        AppSnackBar.show(message: 'Email sended', context: context);
+      } else {
+        AppSnackBar.show(message: result, context: context, error: true);
+      }
+    }
+
+    tictac();
+  }
+
+  logout(BuildContext context) async {
+    await FirebaseAuth.instance.signOut();
+    if (mounted) {
+      context.go('/');
+    }
   }
 
   @override
@@ -77,102 +94,70 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
         actions: [
           IconButton(
             onPressed: () async {
-              showDialog(
+              AppDialog.show(
+                title: 'Leave',
                 context: context,
-                builder: (context) => AlertDialog(
-                  title: const Text('Logout'),
-                  content: const Text('Are you sure to leave the application'),
-                  actions: [
-                    TextButton(
-                      onPressed: () async {
-                        await FirebaseAuth.instance.signOut();
-                        if (mounted) {
-                          context.go('/');
-                        }
-                      },
-                      child: const Text('Yes'),
-                    )
-                  ],
-                ),
+                content: 'Are you sure to leave the application?',
+                actions: [
+                  TextButton(
+                    onPressed: () {
+                      logout(context);
+                    },
+                    child: const Text('Yes'),
+                  )
+                ],
               );
             },
             icon: const Icon(Icons.logout),
           )
         ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(40),
-        child: Center(
-            child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(
-              color: Theme.of(context).colorScheme.primary,
-              Icons.mark_email_unread,
-              size: 50,
-            ),
-            const SizedBox(height: 10),
-            Text(
-              'Verify your email address',
-              textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.titleLarge,
-            ),
-            const SizedBox(height: 10),
-            Text(
-              'We send a link to (${FirebaseAuth.instance.currentUser?.email}) address to you confirm the verification.',
-              textAlign: TextAlign.center,
-            ),
-            const SizedBox(height: 50),
-            const Divider(),
-            const SizedBox(height: 10),
-            const Text(
-              'You can ressend email if you don\'t received or the link was expired',
-              textAlign: TextAlign.center,
-            ),
-            const SizedBox(height: 15),
-            if (_emailSended == 'loading')
-              const SizedBox(
-                width: 20,
-                height: 20,
-                child: CircularProgressIndicator(),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(40),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(
+                color: Theme.of(context).colorScheme.primary,
+                Icons.mark_email_unread,
+                size: 50,
               ),
-            if (_emailSended == 'no')
-              FilledButton(
-                onPressed: () async {
-                  setState(() {
-                    _emailSended = 'loading';
-                  });
-
-                  try {
-                    await FirebaseAuth.instance.currentUser
-                        ?.sendEmailVerification();
-
-                    var snack = getSnack('Email sended');
-
-                    if (mounted) {
-                      ScaffoldMessenger.of(context).clearSnackBars();
-                      ScaffoldMessenger.of(context).showSnackBar(snack);
-                    }
-                  } catch (e) {
-                    var snack = getSnack('Email sended');
-
-                    if (mounted) {
-                      ScaffoldMessenger.of(context).clearSnackBars();
-                      ScaffoldMessenger.of(context).showSnackBar(snack);
-                    }
-                  }
-
-                  tictac();
-                },
-                child: const Text('Ressend email'),
+              const SizedBox(height: 10),
+              Text(
+                'Verify your email address',
+                textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.titleLarge,
               ),
-            if (_emailSended == 'yes')
-              FilledButton(
-                onPressed: null,
-                child: Text('Ressend email $_counter'),
+              const SizedBox(height: 10),
+              Text(
+                'We send a link to (${FirebaseAuth.instance.currentUser?.email}) address to you confirm the verification.',
+                textAlign: TextAlign.center,
               ),
-          ],
-        )),
+              const SizedBox(height: 50),
+              const Divider(),
+              const SizedBox(height: 10),
+              const Text(
+                'You can ressend email if you don\'t received or the link was expired',
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 15),
+              if (_emailSended == 'loading') const Loading(),
+              if (_emailSended == 'no')
+                FilledButton(
+                  onPressed: () {
+                    handleSendEmail();
+                  },
+                  child: const Text('Ressend email'),
+                ),
+              if (_emailSended == 'yes')
+                FilledButton(
+                  onPressed: null,
+                  child: Text('Ressend email $_counter'),
+                ),
+            ],
+          ),
+        ),
       ),
     );
   }
