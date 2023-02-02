@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_firebase_auth/core/components/loading.dart';
-import 'package:flutter_firebase_auth/core/components/snackbar.dart';
 import 'package:validatorless/validatorless.dart';
-import '/core/core.dart' show AuthService;
+import '/core/core.dart' show AuthService, AppSnackBar, Loading;
 
 class ForgotPasswordPage extends StatefulWidget {
   const ForgotPasswordPage({super.key});

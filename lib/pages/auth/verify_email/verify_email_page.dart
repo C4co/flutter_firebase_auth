@@ -1,9 +1,8 @@
 import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_firebase_auth/core/components/loading.dart';
-import 'package:flutter_firebase_auth/core/core.dart';
 import 'package:go_router/go_router.dart';
+import '/core/core.dart';
 
 class VerifyEmailPage extends StatefulWidget {
   const VerifyEmailPage({super.key});
