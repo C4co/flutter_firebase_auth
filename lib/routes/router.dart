@@ -1,6 +1,6 @@
 import 'package:go_router/go_router.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import '/pages/pages.dart';
+import '/views/views.dart';
 
 final router = GoRouter(
   routes: [

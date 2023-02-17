@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-var basicTheme = ThemeData(
+var mainTheme = ThemeData(
   useMaterial3: true,
   colorSchemeSeed: Colors.blue,
   brightness: Brightness.light,
