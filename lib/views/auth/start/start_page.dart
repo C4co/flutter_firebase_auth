@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_firebase_auth/views/auth/start/components/auth_item.dart';
 import 'package:fluttericon/font_awesome5_icons.dart';
 import 'package:go_router/go_router.dart';
 import '/core/core.dart' show AuthService, AppSnackBar;
@@ -41,7 +42,7 @@ class _StartPageState extends State<StartPage> {
             const Text(
               'Flutter\nFirebase',
               style: TextStyle(
-                fontSize: 60,
+                fontSize: 50,
                 fontWeight: FontWeight.w300,
                 height: 1,
               ),
@@ -57,38 +58,27 @@ class _StartPageState extends State<StartPage> {
                     height: 200,
                     child: Column(
                       children: [
-                        ListTile(
-                          onTap: () {
+                        AuthOption(
+                          action: () {
                             continueWithGoogle();
                           },
-                          title: Row(
-                            children: [
-                              Icon(
-                                FontAwesome5.google,
-                                color: Theme.of(context).colorScheme.primary,
-                              ),
-                              const SizedBox(width: 20),
-                              const Text('Continue with google'),
-                            ],
-                          ),
+                          icon: FontAwesome5.google,
+                          label: 'Continue with Google',
                         ),
                         const Divider(height: 1),
-                        ListTile(
-                          onTap: () {
+                        AuthOption(
+                          action: () {
                             context.go('/start/login');
                           },
-                          title: Row(
-                            children: [
-                              Icon(
-                                FontAwesome5.envelope,
-                                color: Theme.of(context).colorScheme.primary,
-                              ),
-                              const SizedBox(width: 20),
-                              const Text('Login with email and password'),
-                            ],
-                          ),
+                          icon: FontAwesome5.envelope,
+                          label: 'Enter with email and password',
                         ),
                         const Divider(height: 1),
+                        AuthOption(
+                          action: () {},
+                          icon: FontAwesome5.link,
+                          label: 'Enter without password',
+                        ),
                       ],
                     ),
                   ),
