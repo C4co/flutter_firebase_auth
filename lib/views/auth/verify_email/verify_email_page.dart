@@ -145,14 +145,14 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
                 loading: _emailSended == 'loading',
                 hidden: _emailSended == 'yes',
                 fullWidth: true,
-                onPress: () {
+                onPressed: () {
                   handleSendEmail();
                 },
                 label: 'Ressend email',
               ),
               if (_emailSended == 'yes')
                 AppButton(
-                  onPress: null,
+                  onPressed: null,
                   label: 'Ressend email $_counter',
                 ),
             ],

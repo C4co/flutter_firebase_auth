@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class AppButton extends StatefulWidget {
-  final VoidCallback? onPress;
+  final VoidCallback? onPressed;
   final String label;
   final bool loading;
   final bool fullWidth;
@@ -9,7 +9,7 @@ class AppButton extends StatefulWidget {
 
   const AppButton({
     super.key,
-    this.onPress,
+    this.onPressed,
     required this.label,
     this.loading = false,
     this.fullWidth = false,
@@ -48,7 +48,7 @@ class _AppButtonState extends State<AppButton> {
     }
 
     return FilledButton(
-      onPressed: widget.onPress,
+      onPressed: widget.onPressed,
       child: SizedBox(
         width: width,
         child: Center(child: Text(widget.label)),

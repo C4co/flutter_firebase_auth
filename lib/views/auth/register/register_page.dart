@@ -126,7 +126,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     label: 'Submit',
                     loading: _isLoading,
                     fullWidth: true,
-                    onPress: () {
+                    onPressed: () {
                       registerHandle();
                     },
                   ),

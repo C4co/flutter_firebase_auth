@@ -88,7 +88,7 @@ class _EmailLinkState extends State<EmailLink> {
               ),
               const SizedBox(height: 20),
               AppButton(
-                onPress: () {
+                onPressed: () {
                   sendLink(context);
                 },
                 label: 'Submit',

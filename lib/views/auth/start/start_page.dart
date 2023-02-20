@@ -87,7 +87,7 @@ class _StartPageState extends State<StartPage> {
               height: 40,
             ),
             AppButton(
-              onPress: () {
+              onPressed: () {
                 showOptions(context);
               },
               label: 'Start',

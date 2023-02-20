@@ -129,7 +129,7 @@ class _LoginPageState extends State<LoginPage> {
                     label: 'Submit',
                     loading: _isLoading,
                     fullWidth: true,
-                    onPress: () {
+                    onPressed: () {
                       submitHandle(context);
                     },
                   ),

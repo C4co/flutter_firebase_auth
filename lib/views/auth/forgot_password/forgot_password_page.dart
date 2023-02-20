@@ -91,7 +91,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                   hidden: _isSuccess,
                   loading: _isLoading,
                   fullWidth: true,
-                  onPress: () => {submitHandle(context)},
+                  onPressed: () => {submitHandle(context)},
                 )
               ],
             ),
