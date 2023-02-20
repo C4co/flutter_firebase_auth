@@ -81,7 +81,9 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                   ),
                   controller: _emailController,
                   decoration: const InputDecoration(
-                      label: Text('Email'), prefixIcon: Icon(Icons.mail)),
+                    label: Text('Email'),
+                    prefixIcon: Icon(Icons.mail),
+                  ),
                 ),
                 const SizedBox(height: 20),
                 if (_isLoading) const Loading(),
@@ -90,7 +92,9 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                     onPressed: () => {submitHandle(context)},
                     child: const SizedBox(
                       width: double.infinity,
-                      child: Center(child: Text('Submit')),
+                      child: Center(
+                        child: Text('Submit'),
+                      ),
                     ),
                   )
               ],

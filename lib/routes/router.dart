@@ -66,6 +66,10 @@ final router = GoRouter(
             ),
           ],
         ),
+        GoRoute(
+          path: 'email-link',
+          builder: (context, state) => const EmailLink(),
+        ),
       ],
     ),
   ],

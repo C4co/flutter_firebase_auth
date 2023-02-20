@@ -75,9 +75,11 @@ class _StartPageState extends State<StartPage> {
                         ),
                         const Divider(height: 1),
                         AuthOption(
-                          action: () {},
+                          action: () {
+                            context.go('/start/email-link');
+                          },
                           icon: FontAwesome5.link,
-                          label: 'Enter without password',
+                          label: 'Enter with email link',
                         ),
                       ],
                     ),

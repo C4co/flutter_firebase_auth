@@ -43,6 +43,7 @@ dependencies:
   google_sign_in: ^5.4.3
   fluttericon: ^2.0.0
   flutter_dotenv: ^5.0.2
+  firebase_dynamic_links: ^5.0.14
 
 dev_dependencies:
   flutter_test:
