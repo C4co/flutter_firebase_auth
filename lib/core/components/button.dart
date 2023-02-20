@@ -1,19 +1,20 @@
 import 'package:flutter/material.dart';
 
 class AppButton extends StatefulWidget {
-  final VoidCallback onPress;
+  final VoidCallback? onPress;
   final String label;
   final bool loading;
   final bool fullWidth;
   final bool hidden;
 
-  const AppButton(
-      {super.key,
-      required this.onPress,
-      required this.label,
-      this.loading = false,
-      this.fullWidth = false,
-      this.hidden = false});
+  const AppButton({
+    super.key,
+    this.onPress,
+    required this.label,
+    this.loading = false,
+    this.fullWidth = false,
+    this.hidden = false,
+  });
 
   @override
   State<AppButton> createState() => _AppButtonState();

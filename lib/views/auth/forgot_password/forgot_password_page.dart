@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:validatorless/validatorless.dart';
-import '/core/core.dart' show AuthService, AppSnackBar, Loading;
+import '/core/core.dart' show AuthService, AppSnackBar, AppButton;
 
 class ForgotPasswordPage extends StatefulWidget {
   const ForgotPasswordPage({super.key});
@@ -86,17 +86,13 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                   ),
                 ),
                 const SizedBox(height: 20),
-                if (_isLoading) const Loading(),
-                if (!_isLoading && !_isSuccess)
-                  FilledButton(
-                    onPressed: () => {submitHandle(context)},
-                    child: const SizedBox(
-                      width: double.infinity,
-                      child: Center(
-                        child: Text('Submit'),
-                      ),
-                    ),
-                  )
+                AppButton(
+                  label: 'Submit',
+                  hidden: _isSuccess,
+                  loading: _isLoading,
+                  fullWidth: true,
+                  onPress: () => {submitHandle(context)},
+                )
               ],
             ),
           ),

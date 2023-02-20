@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:validatorless/validatorless.dart';
-import '/core/core.dart' show AuthService, Loading, AppSnackBar;
+import '/core/core.dart' show AuthService, AppSnackBar, AppButton;
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -122,22 +122,14 @@ class _RegisterPageState extends State<RegisterPage> {
                     ),
                   ),
                   const SizedBox(height: 20),
-                  if (_isLoading)
-                    const Center(
-                      child: Loading(),
-                    ),
-                  if (!_isLoading)
-                    FilledButton(
-                      onPressed: () {
-                        registerHandle();
-                      },
-                      child: const SizedBox(
-                        width: double.infinity,
-                        child: Center(
-                          child: Text('Submit'),
-                        ),
-                      ),
-                    ),
+                  AppButton(
+                    label: 'Submit',
+                    loading: _isLoading,
+                    fullWidth: true,
+                    onPress: () {
+                      registerHandle();
+                    },
+                  ),
                 ],
               ),
             ),

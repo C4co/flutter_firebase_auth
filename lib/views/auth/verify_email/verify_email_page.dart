@@ -141,18 +141,19 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 15),
-              if (_emailSended == 'loading') const Loading(),
-              if (_emailSended == 'no')
-                FilledButton(
-                  onPressed: () {
-                    handleSendEmail();
-                  },
-                  child: const Text('Ressend email'),
-                ),
+              AppButton(
+                loading: _emailSended == 'loading',
+                hidden: _emailSended == 'yes',
+                fullWidth: true,
+                onPress: () {
+                  handleSendEmail();
+                },
+                label: 'Ressend email',
+              ),
               if (_emailSended == 'yes')
-                FilledButton(
-                  onPressed: null,
-                  child: Text('Ressend email $_counter'),
+                AppButton(
+                  onPress: null,
+                  label: 'Ressend email $_counter',
                 ),
             ],
           ),

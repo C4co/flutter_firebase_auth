@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:validatorless/validatorless.dart';
-import '/core/core.dart' show AuthService, Loading, AppSnackBar;
+import '/core/core.dart' show AuthService, AppSnackBar, AppButton;
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -125,22 +125,14 @@ class _LoginPageState extends State<LoginPage> {
                     child: const Text('Forgot your password?'),
                   ),
                   const SizedBox(height: 5),
-                  if (_isLoading)
-                    const Center(
-                      child: Loading(),
-                    ),
-                  if (!_isLoading)
-                    FilledButton(
-                      onPressed: () {
-                        submitHandle(context);
-                      },
-                      child: const SizedBox(
-                        width: double.infinity,
-                        child: Center(
-                          child: Text('Submit'),
-                        ),
-                      ),
-                    ),
+                  AppButton(
+                    label: 'Submit',
+                    loading: _isLoading,
+                    fullWidth: true,
+                    onPress: () {
+                      submitHandle(context);
+                    },
+                  ),
                 ],
               ),
             ),
