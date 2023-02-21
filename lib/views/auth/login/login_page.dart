@@ -18,7 +18,6 @@ class _LoginPageState extends State<LoginPage> {
 
   bool _securePassword = true;
   bool _isLoading = false;
-
   submitHandle(BuildContext context) async {
     if (_formKey.currentState!.validate()) {
       setState(() {

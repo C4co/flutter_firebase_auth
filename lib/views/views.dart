@@ -5,4 +5,3 @@ export './auth/start/start_page.dart';
 export './user/user_page.dart';
 export './auth/verify_email/verify_email_page.dart';
 export './home/home_page.dart';
-export './auth/email_link/email_link.dart';

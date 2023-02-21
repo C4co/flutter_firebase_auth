@@ -1,5 +1,4 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthService {
@@ -99,29 +98,6 @@ class AuthService {
       return 'Success';
     } catch (e) {
       return e.toString();
-    }
-  }
-
-  Future<String> sendSignInLinkEmail({required String emailAddress}) async {
-    var acs = ActionCodeSettings(
-      url: 'https://cncauth.page.link',
-      handleCodeInApp: true,
-      iOSBundleId: 'com.flutterFirebase',
-      androidPackageName: 'com.flutter_firebase_auth',
-      androidInstallApp: true,
-      androidMinimumVersion: '12',
-    );
-
-    try {
-      await FirebaseAuth.instance.sendSignInLinkToEmail(
-        email: emailAddress,
-        actionCodeSettings: acs,
-      );
-
-      return 'Success';
-    } catch (e) {
-      debugPrint(e.toString());
-      return 'Error sending email verification: $emailAddress';
     }
   }
 }

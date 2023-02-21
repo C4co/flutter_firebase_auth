@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -14,6 +15,7 @@ class _UserPageState extends State<UserPage> {
   User? user = FirebaseAuth.instance.currentUser;
 
   leaveApplication(BuildContext context) async {
+    await FirebaseFirestore.instance.clearPersistence();
     await FirebaseAuth.instance.signOut();
     if (mounted) {
       context.go('/');
