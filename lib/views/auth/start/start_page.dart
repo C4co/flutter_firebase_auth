@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_firebase_auth/views/auth/start/components/auth_item.dart';
+import 'package:flutter_firebase_auth/views/auth/start/start_controller.dart';
 import 'package:fluttericon/font_awesome5_icons.dart';
 import 'package:go_router/go_router.dart';
-import '/core/core.dart' show AuthService, AppSnackBar, AppButton;
+import '/core/core.dart' show AppButton;
 
 class StartPage extends StatefulWidget {
   const StartPage({super.key});
@@ -11,23 +12,7 @@ class StartPage extends StatefulWidget {
   State<StartPage> createState() => _StartPageState();
 }
 
-class _StartPageState extends State<StartPage> {
-  final _auth = AuthService();
-
-  continueWithGoogle() async {
-    String result = await _auth.signInWithGoogle();
-
-    if (mounted) {
-      if (result == 'Success') {
-        context.go('/');
-
-        return;
-      }
-
-      AppSnackBar.show(message: result, context: context);
-    }
-  }
-
+class _StartPageState extends State<StartPage> with StartController {
   showOptions(BuildContext context) {
     showModalBottomSheet(
       context: context,
@@ -37,7 +22,7 @@ class _StartPageState extends State<StartPage> {
           children: [
             AuthOption(
               action: () {
-                continueWithGoogle();
+                continueWithGoogle(context);
               },
               icon: FontAwesome5.google,
               label: 'Continue with Google',

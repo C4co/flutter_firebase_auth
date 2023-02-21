@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:validatorless/validatorless.dart';
-import '/core/core.dart' show AuthService, AppSnackBar, AppButton;
+import 'forgot_password_controller.dart';
+import '/core/core.dart' show AppButton;
 
 class ForgotPasswordPage extends StatefulWidget {
   const ForgotPasswordPage({super.key});
@@ -9,58 +10,15 @@ class ForgotPasswordPage extends StatefulWidget {
   State<ForgotPasswordPage> createState() => _ForgotPasswordPageState();
 }
 
-class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
-  final _formKey = GlobalKey<FormState>();
-  final _emailController = TextEditingController();
-  final _auth = AuthService();
-  bool _isLoading = false;
-  bool _isSuccess = false;
-
-  submitHandle(BuildContext context) async {
-    if (_formKey.currentState!.validate()) {
-      setState(() {
-        _isLoading = true;
-      });
-
-      String? result = await _auth.forgotPassword(
-        email: _emailController.text,
-      );
-
-      if (mounted) {
-        if (result == 'Success') {
-          AppSnackBar.show(
-            message: 'Email sended',
-            context: context,
-          );
-
-          setState(() {
-            _isLoading = false;
-            _isSuccess = true;
-          });
-
-          return;
-        }
-
-        AppSnackBar.show(
-          message: result!,
-          context: context,
-          error: true,
-        );
-      }
-
-      setState(() {
-        _isLoading = false;
-      });
-    }
-  }
-
+class _ForgotPasswordPageState extends State<ForgotPasswordPage>
+    with ForgotPasswordController {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Recover password')),
       body: SingleChildScrollView(
         child: Form(
-          key: _formKey,
+          key: formKey,
           autovalidateMode: AutovalidateMode.onUserInteraction,
           child: Padding(
             padding: const EdgeInsets.all(20),
@@ -79,7 +37,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                       Validatorless.required('Email is required'),
                     ],
                   ),
-                  controller: _emailController,
+                  controller: emailController,
                   decoration: const InputDecoration(
                     label: Text('Email'),
                     prefixIcon: Icon(Icons.mail),
@@ -88,8 +46,8 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                 const SizedBox(height: 20),
                 AppButton(
                   label: 'Submit',
-                  hidden: _isSuccess,
-                  loading: _isLoading,
+                  hidden: isSuccess,
+                  loading: isLoading,
                   fullWidth: true,
                   onPressed: () => {submitHandle(context)},
                 )

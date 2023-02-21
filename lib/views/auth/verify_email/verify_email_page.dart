@@ -1,7 +1,6 @@
-import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
+import 'package:flutter_firebase_auth/views/auth/verify_email/verify_email_controller.dart';
 import '/core/core.dart';
 
 class VerifyEmailPage extends StatefulWidget {
@@ -11,78 +10,8 @@ class VerifyEmailPage extends StatefulWidget {
   State<VerifyEmailPage> createState() => _VerifyEmailPageState();
 }
 
-class _VerifyEmailPageState extends State<VerifyEmailPage> {
-  Timer? _checkEmailtimer;
-  Timer? _ticTacTimer;
-  String _emailSended = 'no';
-  int _counter = 100;
-  final _auth = AuthService();
-
-  @override
-  void dispose() {
-    _checkEmailtimer?.cancel();
-    _ticTacTimer?.cancel();
-    super.dispose();
-  }
-
-  checkEmail(BuildContext context) {
-    _checkEmailtimer = Timer.periodic(const Duration(seconds: 3), (timer) {
-      User? user = FirebaseAuth.instance.currentUser;
-      user?.reload();
-
-      if (user?.emailVerified == true) {
-        timer.cancel();
-
-        if (context.mounted) {
-          context.go('/home');
-        }
-      }
-    });
-  }
-
-  tictac() {
-    _ticTacTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
-      setState(() {
-        _emailSended = 'yes';
-        _counter--;
-      });
-
-      if (_counter == 0) {
-        debugPrint('Ressend email again');
-        timer.cancel();
-        setState(() {
-          _counter = 100;
-          _emailSended = 'no';
-        });
-      }
-    });
-  }
-
-  handleSendEmail() async {
-    setState(() {
-      _emailSended = 'loading';
-    });
-
-    var result = await _auth.sendEmailVerification();
-
-    if (mounted) {
-      if (result == 'Success') {
-        AppSnackBar.show(message: 'Email sended', context: context);
-      } else {
-        AppSnackBar.show(message: result, context: context, error: true);
-      }
-    }
-
-    tictac();
-  }
-
-  logout(BuildContext context) async {
-    await FirebaseAuth.instance.signOut();
-    if (mounted) {
-      context.go('/');
-    }
-  }
-
+class _VerifyEmailPageState extends State<VerifyEmailPage>
+    with VerifyEmailController {
   @override
   Widget build(BuildContext context) {
     checkEmail(context);
@@ -142,18 +71,18 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
               ),
               const SizedBox(height: 15),
               AppButton(
-                loading: _emailSended == 'loading',
-                hidden: _emailSended == 'yes',
+                loading: emailSended == 'loading',
+                hidden: emailSended == 'yes',
                 fullWidth: true,
                 onPressed: () {
                   handleSendEmail();
                 },
                 label: 'Ressend email',
               ),
-              if (_emailSended == 'yes')
+              if (emailSended == 'yes')
                 AppButton(
                   onPressed: null,
-                  label: 'Ressend email $_counter',
+                  label: 'Ressend email $counter',
                 ),
             ],
           ),

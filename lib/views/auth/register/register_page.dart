@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_firebase_auth/views/auth/register/register_controller.dart';
 import 'package:go_router/go_router.dart';
 import 'package:validatorless/validatorless.dart';
-import '/core/core.dart' show AuthService, AppSnackBar, AppButton;
+import '/core/core.dart' show AppButton;
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -10,44 +11,8 @@ class RegisterPage extends StatefulWidget {
   State<RegisterPage> createState() => _RegisterPageState();
 }
 
-class _RegisterPageState extends State<RegisterPage> {
-  final _formKey = GlobalKey<FormState>();
-  final _emailController = TextEditingController();
-  final _passwordController = TextEditingController();
-  final _auth = AuthService();
-
+class _RegisterPageState extends State<RegisterPage> with RegisterController {
   bool _securePassword = true;
-  bool _isLoading = false;
-
-  registerHandle() async {
-    if (_formKey.currentState!.validate()) {
-      setState(() {
-        _isLoading = true;
-      });
-
-      String? result = await _auth.registration(
-        email: _emailController.text,
-        password: _passwordController.text,
-      );
-
-      if (mounted) {
-        if (result == 'Success') {
-          context.go('/');
-          return;
-        }
-
-        AppSnackBar.show(
-          message: result!,
-          context: context,
-          error: true,
-        );
-      }
-
-      setState(() {
-        _isLoading = false;
-      });
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +21,7 @@ class _RegisterPageState extends State<RegisterPage> {
       body: SingleChildScrollView(
         child: Form(
           autovalidateMode: AutovalidateMode.onUserInteraction,
-          key: _formKey,
+          key: formKey,
           child: Container(
             padding: const EdgeInsets.all(20),
             child: Center(
@@ -82,7 +47,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
                   const SizedBox(height: 20),
                   TextFormField(
-                    controller: _emailController,
+                    controller: emailController,
                     validator: Validatorless.multiple(
                       [
                         Validatorless.required('Name is required'),
@@ -96,7 +61,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
                   const SizedBox(height: 20),
                   TextFormField(
-                    controller: _passwordController,
+                    controller: passwordController,
                     obscureText: _securePassword,
                     validator: Validatorless.multiple(
                       [
@@ -124,10 +89,10 @@ class _RegisterPageState extends State<RegisterPage> {
                   const SizedBox(height: 20),
                   AppButton(
                     label: 'Submit',
-                    loading: _isLoading,
+                    loading: isLoading,
                     fullWidth: true,
                     onPressed: () {
-                      registerHandle();
+                      registerNewUser();
                     },
                   ),
                 ],
