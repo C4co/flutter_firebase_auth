@@ -56,8 +56,8 @@ class _StartPageState extends State<StartPage> with StartController {
             const Text(
               'Flutter\nFirebase',
               style: TextStyle(
-                fontSize: 50,
-                fontWeight: FontWeight.w300,
+                fontSize: 40,
+                fontWeight: FontWeight.w900,
                 height: 1,
               ),
             ),
